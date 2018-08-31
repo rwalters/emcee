@@ -1,14 +1,14 @@
 module Emcee
   class Prompt
-    class << self
-      PROMPT = "> ".freeze
+    PROMPT = "> ".freeze
 
-      def prefix
-        PROMPT
+    class << self
+      def print_prefix
+        print PROMPT
       end
 
       def next
-        print PROMPT
+        print_prefix
 
         gets.strip
       end

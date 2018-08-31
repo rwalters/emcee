@@ -2,7 +2,6 @@ lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require "emcee"
-require "emcee/prompt"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
