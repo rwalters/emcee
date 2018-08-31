@@ -1,0 +1,13 @@
+version: '2.1'
+
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - ./:/app
+      - bundle_cache:/bundle
+    command: '/app/bin/music'
+
+volumes:
+  bundle_cache:
