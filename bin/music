@@ -1,16 +1,13 @@
 #!/usr/bin/env ruby
 
-
-PROMPT = "> ".freeze
+require_relative '../boot'
 
 events = []
 
 puts "Welcome to your music collection!\n\n"
 
 loop do
-  print PROMPT
-
-  cmd = gets.strip
+  cmd = Emcee::Prompt.next
 
   (action, args) = cmd.split(/\s+/, 2)
   action = (action || "unknown").downcase
