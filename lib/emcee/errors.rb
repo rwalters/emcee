@@ -4,7 +4,7 @@ module Emcee
 
   class UnknownCommandError < RouteError
     def initialize(cmd)
-      msg = "Command '#{cmd}' is now recognized"
+      msg = "Command '#{cmd}' is not recognized"
       super(msg)
     end
   end

@@ -13,7 +13,8 @@ RSpec.describe Emcee::Route do
     let(:new_lib) { { title => {artist: "Queen", played: false} } }
 
     it "adds the new album" do
-      expect(subject).to eq({ message: msg, library: new_lib })
+      expect(subject[:message]).to eq(msg)
+      expect(subject[:library].library).to eq(new_lib)
     end
 
     context "that's a duplicate album" do
@@ -36,7 +37,8 @@ RSpec.describe Emcee::Route do
     end
 
     it "marks the album as played" do
-      expect(subject).to eq({ message: msg, library: new_lib })
+      expect(subject[:message]).to eq(msg)
+      expect(subject[:library].library).to eq(new_lib)
     end
 
     context "album not found" do
@@ -71,7 +73,8 @@ RSpec.describe Emcee::Route do
       end
 
       it "lists all albums and played status" do
-        expect(subject).to eq( { message: msg, library: library } )
+        expect(subject[:message]).to eq(msg)
+        expect(subject[:library].library).to eq(library)
       end
     end
 
@@ -99,7 +102,8 @@ RSpec.describe Emcee::Route do
       end
 
       it "lists unplayed albums" do
-        expect(subject).to eq( { message: msg, library: library } )
+        expect(subject[:message]).to eq(msg)
+        expect(subject[:library].library).to eq(library)
       end
     end
 
@@ -129,7 +133,8 @@ RSpec.describe Emcee::Route do
       end
 
       it "lists that artist's albums and played status" do
-        expect(subject).to eq( { message: msg, library: library } )
+        expect(subject[:message]).to eq(msg)
+        expect(subject[:library].library).to eq(library)
       end
     end
 
@@ -159,7 +164,8 @@ RSpec.describe Emcee::Route do
       end
 
       it "lists that artist's albums" do
-        expect(subject).to eq( { message: msg, library: library } )
+        expect(subject[:message]).to eq(msg)
+        expect(subject[:library].library).to eq(library)
       end
     end
   end
@@ -169,7 +175,8 @@ RSpec.describe Emcee::Route do
     let(:msg) { "Bye!" }
 
     it "sends a message of 'Bye!'" do
-      expect(subject).to eq( { message: msg, library: library } )
+      expect(subject[:message]).to eq(msg)
+      expect(subject[:library].library).to eq(library)
     end
   end
 

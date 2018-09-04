@@ -2,25 +2,4 @@
 
 require_relative '../boot'
 
-events = []
-
-puts "Welcome to your music collection!\n\n"
-
-loop do
-  cmd = Emcee::Prompt.next
-
-  (action, args) = cmd.split(/\s+/, 2)
-  action = (action || "unknown").downcase
-  args   = (args || "none").split(/\s+\"/).map{|elem| elem.tr('"', '') }
-
-  events << {raw: cmd, action: action, args: args}
-
-  case action
-  when "quit"
-    puts "\nEVENTS\n- #{events.map(&:inspect).join("\n- ")}\n\n"
-    puts "Bye!"
-    break
-  else
-    puts "Action: #{action.inspect}\nArgs:   #{args.inspect}\n"
-  end
-end
+Emcee::Term.new.start
