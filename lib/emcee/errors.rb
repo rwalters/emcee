@@ -2,9 +2,9 @@ module Emcee
   class BaseError   < StandardError;end
   class RouteError  < BaseError;end
 
-  class NoSuchCommandError < RouteError
+  class UnknownCommandError < RouteError
     def initialize(cmd)
-      msg = "No such command '#{cmd}'"
+      msg = "Command '#{cmd}' is now recognized"
       super(msg)
     end
   end

@@ -98,14 +98,86 @@ RSpec.describe Emcee::Route do
           .join("\n")
       end
 
-      it "lists all albums and played status" do
+      it "lists unplayed albums" do
         expect(subject).to eq( { message: msg, library: library } )
       end
     end
 
-    context "show all albums by an artist"
-    context "show unplayed albums by artist"
+    context "show all albums by an artist" do
+      let(:cmd) { %Q[show all by "#{artist}"] }
+      let(:artist) { ["Queen", "Scissor Sisters"].sample }
+      let(:library) do
+        {
+          title => {artist: "Queen", played: false},
+          "Sheer Heart Attack"  => { artist: "Queen", played: true },
+          "News of the World"   => { artist: "Queen", played: false },
+          "Night Work" => { artist: "Scissor Sisters", played: true},
+        }
+      end
+
+      let(:msg) do
+        library
+          .keys
+          .select{|k| library[k][:artist] == artist }
+          .map do |title|
+            artist = library[title][:artist]
+            played = library[title][:played] ? "played" : "unplayed"
+
+            %Q["#{title}" by #{artist} (#{played})]
+          end
+          .join("\n")
+      end
+
+      it "lists that artist's albums and played status" do
+        expect(subject).to eq( { message: msg, library: library } )
+      end
+    end
+
+    context "show unplayed albums by artist" do
+      let(:cmd) { %Q[show unplayed by "#{artist}"] }
+      let(:artist) { ["Queen", "Scissor Sisters"].sample }
+      let(:library) do
+        {
+          title => {artist: "Queen", played: false},
+          "Sheer Heart Attack"  => { artist: "Queen", played: true },
+          "News of the World"   => { artist: "Queen", played: false },
+          "Night Work" => { artist: "Scissor Sisters", played: true},
+        }
+      end
+
+      let(:msg) do
+        library
+          .keys
+          .reject{|k| library[k][:played] }
+          .select{|k| library[k][:artist] == artist }
+          .map do |title|
+            artist = library[title][:artist]
+
+            %Q["#{title}" by #{artist}]
+          end
+          .join("\n")
+      end
+
+      it "lists that artist's albums" do
+        expect(subject).to eq( { message: msg, library: library } )
+      end
+    end
   end
 
-  context "quit the terminal"
+  context "quit the terminal" do
+    let(:cmd) { "quit" }
+    let(:msg) { "Bye!" }
+
+    it "sends a message of 'Bye!'" do
+      expect(subject).to eq( { message: msg, library: library } )
+    end
+  end
+
+  context "anything else" do
+    let(:cmd) { " garbage! " }
+
+    it "raises an error" do
+      expect { subject }.to raise_error(Emcee::UnknownCommandError)
+    end
+  end
 end
